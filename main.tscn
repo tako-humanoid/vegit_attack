@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://bikqpbxcdk4n1"]
+
+[ext_resource type="Script" uid="uid://xrch33g03vdb" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cb7fhah1hf5pf" path="res://world.gd" id="2_0xm2m"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_0xm2m"]
+vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ig7tw"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0xm2m"]
+size = Vector2(50, 50)
+
+[sub_resource type="Environment" id="Environment_7dm0k"]
+
+[node name="Main" type="Node3D" unique_id=55410458]
+script = ExtResource("1_ig7tw")
+
+[node name="World" type="Node3D" parent="." unique_id=904796925]
+unique_name_in_owner = true
+script = ExtResource("2_0xm2m")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="World" unique_id=606914387]
+navigation_mesh = SubResource("NavigationMesh_0xm2m")
+
+[node name="Floor" type="StaticBody3D" parent="World/NavigationRegion3D" unique_id=160208813]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Floor" unique_id=98842404]
+shape = SubResource("WorldBoundaryShape3D_ig7tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/NavigationRegion3D/Floor" unique_id=1094337543]
+mesh = SubResource("PlaneMesh_0xm2m")
+
+[node name="Players" type="Node3D" parent="World" unique_id=191644800]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="World" unique_id=1425449740]
+_spawnable_scenes = PackedStringArray("uid://bpr1hwx3rwp8o")
+spawn_path = NodePath("../Players")
+
+[node name="Environment" type="Node3D" parent="World" unique_id=5975751]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/Environment" unique_id=1125415056]
+transform = Transform3D(1, 0, 0, 0, 0.91134584, 0.4116416, 0, -0.4116416, 0.91134584, 0, 1.3299559, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World/Environment" unique_id=1318486091]
+environment = SubResource("Environment_7dm0k")
+
+[node name="Camera3D" type="Camera3D" parent="World" unique_id=1414144638]
+transform = Transform3D(1, 0, 0, 0, 0.43700594, 0.89945865, 0, -0.89945865, 0.43700594, 0, 26.859165, 20.85754)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1828901740]
+
+[node name="MatchButton" type="Button" parent="UI" unique_id=1568505158]
+offset_left = 1084.0
+offset_top = 603.0
+offset_right = 1128.0
+offset_bottom = 634.0
+text = "Match
+"
+
+[node name="ChatLog" type="RichTextLabel" parent="UI" unique_id=1299907491]
+offset_left = 921.0
+offset_top = 455.0
+offset_right = 1134.0
+offset_bottom = 548.0
+
+[node name="InputText" type="LineEdit" parent="UI" unique_id=435916301]
+offset_left = 923.0
+offset_top = 558.0
+offset_right = 1122.0
+offset_bottom = 589.0
+
+[connection signal="pressed" from="UI/MatchButton" to="." method="_on_match_button_pressed"]
+[connection signal="text_submitted" from="UI/InputText" to="." method="_on_input_text_text_submitted"]

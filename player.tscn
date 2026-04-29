@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bpr1hwx3rwp8o"]
+
+[ext_resource type="Script" uid="uid://b4abcxdxk3uo2" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4flbx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i3pqv"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1387495507]
+script = ExtResource("1_4flbx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1586267463]
+mesh = SubResource("BoxMesh_4flbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=236412113]
+shape = SubResource("BoxShape3D_onrkg")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=23671043]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2031531173]
+replication_config = SubResource("SceneReplicationConfig_i3pqv")
